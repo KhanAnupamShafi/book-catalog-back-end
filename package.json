@@ -21,11 +21,9 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js, jsx,ts,tsx}": [
-      "eslint --fix"
-    ],
-    "src/**/*.{json,js,ts,jsx,tsx,html}": [
-      "prettier --write --ignore-unknown"
+    "**/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write",
+      "npx eslint --fix"
     ]
   },
   "keywords": [],
