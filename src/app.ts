@@ -9,8 +9,8 @@ import cookieParser from 'cookie-parser';
 const app: Application = express();
 
 const corsOptions = {
-	origin: true,
-	credentials: true,
+  origin: true,
+  credentials: true,
 };
 app.use('*', cors(corsOptions));
 app.use(cookieParser());
@@ -23,10 +23,10 @@ app.use('/api/v1', routes);
 
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 app.get('/', async (req: Request, res: Response, next: NextFunction) => {
-	res.status(httpStatus.OK).json({
-		success: true,
-		message: 'Welcome HTTP SERVER',
-	});
+  res.status(httpStatus.OK).json({
+    success: true,
+    message: 'Welcome HTTP SERVER',
+  });
 });
 
 export default app;
