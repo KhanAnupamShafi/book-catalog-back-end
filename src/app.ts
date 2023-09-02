@@ -25,7 +25,7 @@ app.use('/api/v1', routes);
 app.get('/', async (req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.OK).json({
     success: true,
-    message: 'Welcome HTTP SERVER',
+    message: 'Just started❕HTTP SERVER',
   });
 });
 

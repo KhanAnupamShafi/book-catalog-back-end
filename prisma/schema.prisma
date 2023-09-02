@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String            @id @default(uuid())
+  name            String
+  email           String            @unique
+  password        String
+  role            UserRole
+  contactNo       String            @map("contact_no")
+  address         String
+  profileImg      String            @map("profile_img")
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  ReviewAndRating ReviewAndRating[]
+  Order           Order[]
+
+  @@map("users")
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Book      Book[]
+
+  @@map("categories")
+}
+
+model Book {
+  id              String @id @default(uuid())
+  title           String
+  author          String
+  price           Float
+  genre           String
+  publicationDate String @map("publication_date")
+  categoryId      String @map("category_id")
+
+  category Category @relation(fields: [categoryId], references: [id])
+
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  ReviewAndRating ReviewAndRating[]
+
+  @@map("books")
+}
+
+model ReviewAndRating {
+  id     String @id @default(uuid())
+  review String
+  rating Int
+  userId String @map("user_id")
+  bookId String @map("book_id")
+
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("reviews_and_ratings")
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  userId       String      @map("user_id")
+  orderedBooks Json        @map("ordered_books")
+  status       OrderStatus @default(pending)
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+enum OrderStatus {
+  pending
+  shipped
+  delivered
+}
+
+enum UserRole {
+  admin
+  customer
+}

@@ -4,13 +4,6 @@ import { Server } from 'http';
 import app from './app';
 import config from './config/index';
 
-// "src/**/*.{js, jsx,ts,tsx}": [
-//       "eslint --fix"
-//     ],
-//     "src/**/*.{json,js,ts,jsx,tsx,html}": [
-//       "prettier --write --ignore-unknown"
-//     ]
-
 let server: Server;
 
 async function bootstrap() {
