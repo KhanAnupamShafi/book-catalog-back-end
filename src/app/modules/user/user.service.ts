@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import httpStatus from 'http-status';
 import prisma from '../../shared/prisma';
 import ApiError from '../../utils/apiError';
@@ -32,4 +33,23 @@ const getSingleUser = async (userId: string): Promise<IUserPromise | null> => {
   return userWithoutPassword;
 };
 
-export const UserService = { getAllUsers, getSingleUser };
+const updateUser = async (id: string, payload: Partial<User>): Promise<Record<string, never>> => {
+  await prisma.user.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return {};
+};
+
+const deleteUser = async (id: string): Promise<Record<string, never>> => {
+  await prisma.user.delete({
+    where: {
+      id,
+    },
+  });
+  return {};
+};
+
+export const UserService = { getAllUsers, getSingleUser, updateUser, deleteUser };

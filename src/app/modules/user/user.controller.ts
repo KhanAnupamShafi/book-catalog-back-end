@@ -26,4 +26,28 @@ const getSingleUser = asyncWrapper(async (req: Request, res: Response) => {
   });
 });
 
-export const UserController = { getAllUsers, getSingleUser };
+const updateUser = asyncWrapper(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await UserService.updateUser(id, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User updated successfully',
+    data: {},
+  });
+});
+
+const deleteUser = asyncWrapper(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await UserService.deleteUser(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User deleted successfully',
+    data: {},
+  });
+});
+
+export const UserController = { getAllUsers, getSingleUser, updateUser, deleteUser };
